@@ -6,7 +6,15 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./uploads:/app/uploads
-      - ./output:/app/output
+      - ./uploads:/app/uploads  # Mount uploads directory
+      - ./output:/app/output    # Mount output directory
     environment:
       - PYTHONPATH=/app
+      - MAX_WORKERS=3           # Number of concurrent compression jobs
+      - LOG_LEVEL=INFO         # Logging level (DEBUG, INFO, WARNING, ERROR)
+    restart: unless-stopped     # Automatically restart on crash
+    deploy:
+      resources:
+        limits:
+          memory: 2G           # Limit container memory
+          cpus: '2'           # Limit CPU usage
