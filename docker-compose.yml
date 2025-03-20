@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  video-compressor:
+    build: .
+    image: kkdevops001/compress-ffmpeg:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./output:/app/output
+    environment:
+      - MAX_WORKERS=0  # Let uvicorn use all available CPU cores
+      - UVICORN_WORKERS=${UVICORN_WORKERS:-0}  # Auto-detect CPU count
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4G
+        reservations:
+          cpus: '2'
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

@@ -1,0 +1,5 @@
+script/
+__pycache__/
+*.mp4
+output/
+uploads/
