@@ -3,7 +3,7 @@ version: '3.8'
 services:
   video-compressor:
     build: .
-    image: kkdevops001/compress-ffmpeg:latest
+    image: kkdevops001/compress-ffmpeg:0.0.2
     ports:
       - "8000:8000"
     volumes:
